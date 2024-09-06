@@ -26,11 +26,11 @@ def jsoncheck(file: str)-> bool:
     else:
         return True
 
-def forward(string: str, charaSetFile: str) -> int:
-    if not jsoncheck(charaSetFile):
-        print(f'Error: {charaSetFile} is invalid')
+def forward(string: str, file: str) -> int:
+    if not jsoncheck(file):
+        print(f'Error: {file} is invalid')
     else:
-        with open(charaSetFile, encoding = 'UTF-8') as file:
+        with open(file, encoding = 'UTF-8') as file:
             characterSet = json.load(file)
         try:
             if not characterSet['caseSensitive']:
@@ -55,11 +55,11 @@ def forward(string: str, charaSetFile: str) -> int:
         except:
             return -1
 
-def backward(num: int, charaSetFile: str) -> str:
-    if not jsoncheck(charaSetFile):
-        print(f'Error: {charaSetFile} is invalid')
+def backward(num: int, file: str) -> str:
+    if not jsoncheck(file):
+        print(f'Error: {file} is invalid')
     else:
-        with open(charaSetFile, encoding = 'UTF-8') as file:
+        with open(file, encoding = 'UTF-8') as file:
             characterSet = json.load(file)
         try:
             if num < 0:
@@ -68,7 +68,6 @@ def backward(num: int, charaSetFile: str) -> str:
             if not characterSet['caseSensitive']:
                 for i in range(len(characterSet['order'])):
                     characterSet['order'][i] = characterSet['order'][i].lower()
-                string = string.lower()
             excludeLenAddition = len(characterSet['order'])**characterSet['minLen'] - (len(characterSet['order'])-2)*(len(characterSet['order'])**characterSet['minLen']-1)/(len(characterSet['order'])-1) - 1
             length = 0
             while int(len(characterSet['order'])**(length + 1) - (len(characterSet['order'])-2)*(len(characterSet['order'])**(length + 1)-1)/(len(characterSet['order'])-1) - 1 - excludeLenAddition) <= num:
@@ -83,7 +82,7 @@ def backward(num: int, charaSetFile: str) -> str:
                 finalNum = finalNum // len(characterSet['order'])
             return result
         except:
-            return -1
+            return '-1'
 
 
 
