@@ -27,7 +27,7 @@ next, after we got this represantion, we add this little piece of math doing the
 
 the code is customisable, allowing people to change the character order, using a valid json (just look at the default one and try to learn it, i plan to add a small guide through it later)
 
-currently, it supports:
+- currently, it supports:
     - changing the characters order, duh (order)
     - changing the way it adds characters so they go in reverse (reverseAppend) 
         - for example if there was an index which used to give you string "abcd" it will give you now "dcba", this settings allows jsons to exist, which when the string includes only numbers, its index will be identical to the number in the string
@@ -35,7 +35,7 @@ currently, it supports:
         - so for example if we make minLen equal 1, it will get rid of the empty string "", meaning that because it is missing now, the string "a" will have index 0 instead of 1
     - make it case insensitive (caseSensitive)
         - if it will be false, it will make every character in the JSON
-settings which are not supported and may (or may not) be supported in future:
+- settings which are not supported and may (or may not) be supported in future:
     - excluding or including certain characters on certain positions
         - so for example strings starting with "_" dont get an index and instead the next valid string after it would get the index
         - sadly this would make the calculations in math a bit annoying, as i would have to go unsimplify the hidden summation used in the formula (which was removed by simplifying) and add variances into it
