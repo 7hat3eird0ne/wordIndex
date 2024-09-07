@@ -5,13 +5,21 @@ Currently this lets users get a unique index from any strings of arbitary charac
 For example, if we set the arbitary characters to be a normal english alphabet with no other characters in exact same order (meaning 26 characters), the first few indexes are like this:
 
 0\. ""
+
 1\. "a"
+
 2\. "b"
+
 3\. "c"
+
 ...
+
 26\. "z"
+
 27\. "aa"
+
 28\. "ba"
+
 ...
 
 etc, this way it keeps incrementing, going to infinity, the scale of number scales with the length of string too
