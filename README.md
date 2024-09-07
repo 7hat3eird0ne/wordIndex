@@ -58,6 +58,6 @@ We can customise the calculator a bit, by copying the json file and changing the
 - the 'minLen' integer says what should be the minimal length avaible, this just subtracts the final index by the smallest index of the minimal length, for example if we make minLen = 2, it will make "aa" turn into 0, instead of being 27
 - the 'caseSensitive' bool says whatever it should be case sensitive or not, if it is set to false, it will just turn everything lowercase
 
-This is most probably everything for now. Feel free to use it as a normal module if it can be remotely usable in your case, just credit me somewhere visible
+This is most probably everything for now. Feel free to use it if it can be remotely usable in your case, just credit me somewhere visible
 
 Thank you for reading!
