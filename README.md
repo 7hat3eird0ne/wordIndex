@@ -37,15 +37,15 @@ The way the number is actualy computed and the math behind it is pretty simple:
     - Now we gotta take summation of it from 0 to L, but because 0 gives wrong value instead of 1, we just manualy subtract 1 manualy and make the summation starts at 1, this gives us our final formula which we add to numerical representation instead of just alone N**l:
         - N\*\*L - sum( N\*\*(j) - 2N\*\*(j-1) , where j = 1 -> L) - 1
 1. We can simplify the summation though
-    1. first we change the inside of summation to a multiplication 
+    - first we change the inside of summation to a multiplication 
         - (1 - 2/N) \* (N\*\*j) 
-    1. then we can take out the (1 - 2/N) bit out of the summation
-    1. then we can add one to j everywhere so that the bounds get lowered by one
+    - then we can take out the (1 - 2/N) bit out of the summation
+    - then we can add one to j everywhere so that the bounds get lowered by one
         - sum( N\*\*(j+1) , where j = 0 -> L-1)
-    1. then we can multiply the inner summation bit by (N-1) and divide by it the entire summation
-    1. then we can simplify the summation so that it is:
+    - then we can multiply the inner summation bit by (N-1) and divide by it the entire summation
+    - then we can simplify the summation so that it is:
         - N**(L+1) - 1
-    1. we can also multiply the thing by N so we can get rid of the (+1) in the exponent, and simplify the (1 - 2/N)
+    - we can also multiply the thing by N so we can get rid of the (+1) in the exponent, and simplify the (1 - 2/N)
 
 1. then we get subtract the result addition thing and subtract it from our numerical representation and we get our result formula:
     - index = numRepres + N\*\*L - (N - 2) \* (N\*\*L - 1) / (N-1) - 1
