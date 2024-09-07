@@ -24,12 +24,13 @@ For example, if we set the arbitary characters to be a normal english alphabet w
 
 etc, this way it keeps incrementing, going to infinity, the scale of number scales with the length of string too
 
-the core math behnid this is converting every character into integer, going from 0 up to (amount of characters)-1 (in our case 25), then we use the integers as digits, with base of the amount of possible characters there
+- the core math behnid this is converting every character into integer, going from 0 up to (amount of characters)-1 (in our case 25), then we use the integers as digits, with base of the amount of possible characters there
 
-so for example "code" could be written as this in base 26:
+- so for example "code" could be written as this in base 26:
     - 4 3 14 2
 
-next, after we got this represantion, we add this little piece of math doing the magic, assuming l = length of string and n = number of avaible characters (in our case 26):
+- next, after we got this represantion, we add this little piece of math doing the magic, assuming l = length of string and n = number of avaible characters (in our case 26):
+
     - n\*\*l - (n - 2) \* (n\*\*x - 1) / (n - 1) - 1
     - if you want to derive this little formula i found on airplane, you can try to add a 1 on new digit place with biggest value to remove length ambuguity, and then try to find a summation of the skips between biggest value of one length and smallest value of next length (and simplify the summation), good luck
 
