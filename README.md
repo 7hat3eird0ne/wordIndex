@@ -1,51 +1,63 @@
-WIP
+# About
+Hello, currrently, this repository allows users to assign a unique index to any string, with the index scaling up with the length of the string
 
-Currently this lets users get a unique index from any strings of arbitary characters and translate back using said index
+For example, lets make our character set, which is pretty much a json file with all settings and order of characters, we don't have to care about the setting that much, lets just say the characters are only lowercase english alphabet letters in the same order as in alphabet
 
-For example, if we set the arbitary characters to be a normal english alphabet with no other characters in exact same order (meaning 26 characters), the first few indexes are like this:
+The first few indexes of our character set would be:
 
-0\. ""
+- 0\. ""
+- 1\. "a"
+- 2\. "b"
+- 3\. "c"
+- ...
+- 26\. "z"
+- 27\. "aa"
+- 28\. "ba"
+- ...
 
-1\. "a"
+and so on...
 
-2\. "b"
+## The math behind it
 
-3\. "c"
+The way the number is actualy computed and the math behind it is pretty simple:
 
-...
+1. First we convert every individual character in the string to a digit from 0 to N-1 where N is the amount of characters in character set, we can just say that it is the index of the character in the list
+1. Then we put them together and convert the number represenation to the decimal base
+    - For example, string "code" in our alphabet character set could be written as 
+    4(e) 3(d) 14(o) 2(c)
+    - which converted to decimal ends up becoming 72698
+1. Because adding "a" or any character which is first in character set ends up adding 0 to it, it is hard to know if the index refferences to version with or without additional a's, we can fix that by adding N**L, where ** is exponation and L is length of string (for "code", L is 4)
+1. Because of the additional N**L, the formula now leaves out few indexes, the two strings (in their numerical represenation) in between which are the skipped indexes always look like this (where M = N-1):
+    - 1MM and 1000 (add additional M's and 0's to reflect any length)
+    - if we change the forms into their decimal ones:
+        - 1MM = 2N**(L-1)
+        - 1000 = N**(L)
+    - and take difference between them, and subtract 1, we can get the value we should have to remove the additional index:
+        - N**(L) - 2N**(L-1)
+    - Now we gotta take summation of it from 0 to L, but because 0 gives wrong value instead of 1, we just manualy subtract 1 manualy and make the summation starts at 1, this gives us our final formula which we add to numerical representation instead of just alone N**l:
+        - N\*\*L - sum( N\*\*(j) - 2N\*\*(j-1) , where j = 1 -> L) - 1
+1. We can simplify the summation though
+    1. first we change the inside of summation to a multiplication 
+        - (1 - 2/N) \* (N\*\*j) 
+    1. then we can take out the (1 - 2/N) bit out of the summation
+    1. then we can add one to j everywhere so that the bounds get lowered by one
+        - sum( N\*\*(j+1) , where j = 0 -> L-1)
+    1. then we can multiply the inner summation bit by (N-1) and divide by it the entire summation
+    1. then we can simplify the summation so that it is:
+        - N**(L+1) - 1
+    1. we can also multiply the thing by N so we can get rid of the (+1) in the exponent, and simplify the (1 - 2/N)
 
-26\. "z"
+1. then we get subtract the result addition thing and subtract it from our numerical representation and we get our result formula:
+    - index = numRepres + N\*\*L - (N - 2) \* (N\*\*L - 1) / (N-1) - 1
 
-27\. "aa"
+## Customisation
 
-28\. "ba"
+We can customise the calculator a bit, by copying the json file and changing the following:
+- the 'order' array defines in which order do the characters go, every element has to be a string of length 1, duplicates can be there but can make the indexes inaccurate so I don't recomend them
+- the 'reverseAppend' bool says whatever the append should be reversed, for example "code" will normaly be 4 3 14 2, but with reverse append it will be reversed
+- the 'minLen' integer says what should be the minimal length avaible, this just subtracts the final index by the smallest index of the minimal length, for example if we make minLen = 2, it will make "aa" turn into 0, instead of being 27
+- the 'caseSensitive' bool says whatever it should be case sensitive or not, if it is set to false, it will just turn everything lowercase
 
-...
+This is most probably everything for now. Feel free to use it as a normal module if it can be remotely usable in your case, just credit me somewhere visible
 
-etc, this way it keeps incrementing, going to infinity, the scale of number scales with the length of string too
-
-- the core math behnid this is converting every character into integer, going from 0 up to (amount of characters)-1 (in our case 25), then we use the integers as digits, with base of the amount of possible characters there
-
-- so for example "code" could be written as this in base 26:
-    - 4 3 14 2
-
-- next, after we got this represantion, we add this little piece of math doing the magic, assuming l = length of string and n = number of avaible characters (in our case 26):
-
-    - n\*\*l - (n - 2) \* (n\*\*x - 1) / (n - 1) - 1
-    - if you want to derive this little formula i found on airplane, you can try to add a 1 on new digit place with biggest value to remove length ambuguity, and then try to find a summation of the skips between biggest value of one length and smallest value of next length (and simplify the summation), good luck
-
-the code is customisable, allowing people to change the character order, using a valid json (just look at the default one and try to learn it, i plan to add a small guide through it later)
-
-- currently, it supports:
-    - changing the characters order, duh (order)
-    - changing the way it adds characters so they go in reverse (reverseAppend) 
-        - for example if there was an index which used to give you string "abcd" it will give you now "dcba", this settings allows jsons to exist, which when the string includes only numbers, its index will be identical to the number in the string
-    - removing indexs smaller than a certain length (minLen)
-        - so for example if we make minLen equal 1, it will get rid of the empty string "", meaning that because it is missing now, the string "a" will have index 0 instead of 1
-    - make it case insensitive (caseSensitive)
-        - if it will be false, it will make every character in the JSON
-- settings which are not supported and may (or may not) be supported in future:
-    - excluding or including certain characters on certain positions
-        - so for example strings starting with "_" dont get an index and instead the next valid string after it would get the index
-        - sadly this would make the calculations in math a bit annoying, as i would have to go unsimplify the hidden summation used in the formula (which was removed by simplifying) and add variances into it
-        - as of now i dont feel like making it, as i explained earlier, but i may look into it in future if i wont forget about this project
+Thank you for reading!
