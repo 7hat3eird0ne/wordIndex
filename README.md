@@ -94,11 +94,11 @@ We can customise the calculator a bit, by copying the json file and changing the
 1. Subtract 1 from L 
 1. Let S = T - (N-2)*(T-1)/(N-1) - 1, if C = I, then let S = C
 1. Let X = I - S
-1. If L = 0, go to step 15, else go to step 11
 1. Divide X by N, let R = remainder
 1. Find the character corresponding to the remainder as an index in the character set
 1. Append the character to the end of the result string
 1. Subtract 1 from L
+1. If L = -1, go to step 15, else go to step 10
 1. Output the result string
 
 This is most probably everything for now. Feel free to use it if it can be remotely usable in your case, just credit me somewhere visible
