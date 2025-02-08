@@ -24,8 +24,7 @@ The way the number is actualy computed and the math behind it is pretty simple:
 1. First we convert every individual character in the string to a digit from 0 to N-1 where N is the amount of characters in character set, we can just say that it is the index of the character in the list
 1. Then we put them together and convert the number represenation to the decimal base
     - For example, string "code" in our alphabet character set could be written as 
-    4(e) 3(d) 14(o) 2(c)
-    - which converted to decimal ends up becoming 72698
+    4(e) 3(d) 14(o) 2(c), which converted to decimal ends up becoming 72698
 1. Because adding "a" or any character which is first in character set ends up adding 0 to it, it is hard to know if the index refferences to version with or without additional a's, we can fix that by adding N**L, where ** is exponation and L is length of string (for "code", L is 4)
 1. Because of the additional N**L, the formula now leaves out few indexes, the two strings (in their numerical represenation) in between which are the skipped indexes always look like this (where M = N-1):
     - 1MM and 1000 (add additional M's and 0's to reflect any length)
@@ -53,10 +52,54 @@ The way the number is actualy computed and the math behind it is pretty simple:
 ## Customisation
 
 We can customise the calculator a bit, by copying the json file and changing the following:
-- the 'order' array defines in which order do the characters go, every element has to be a string of length 1, duplicates can be there but can make the indexes inaccurate so I don't recomend them
-- the 'reverseAppend' bool says whatever the append should be reversed, for example "code" will normaly be 4 3 14 2, but with reverse append it will be reversed
-- the 'minLen' integer says what should be the minimal length avaible, this just subtracts the final index by the smallest index of the minimal length, for example if we make minLen = 2, it will make "aa" turn into 0, instead of being 27
-- the 'caseSensitive' bool says whatever it should be case sensitive or not, if it is set to false, it will just turn everything lowercase
+- The 'order' array defines in which order do the characters go, every element has to be a string of length 1, duplicates can be there but can make the indexes inaccurate so I don't recomend them.
+- The 'reverseAppend' bool says whatever the append should be reversed, for example "code" will normaly be 4 3 14 2, but with reverse append it will be reversed.
+- The 'minLen' integer says what should be the minimal length avaible, this just subtracts the final index by the smallest index of the minimal length, for example if we make minLen = 2, it will make "aa" turn into 0, instead of being 27.
+- The 'caseSensitive' bool says whatever it should be case sensitive or not, if it is set to false, it will just turn everything lowercase.
+
+## Algorithms intended to be done by human
+
+(If a step results in some decimal number, round it down)
+
+### String to Index:
+
+1. Let R = 0, M = 1, N = amount of characters in character set
+
+1. Take the first character, or next unused one
+
+1. Find the characters index in the character set (starting with 0 going up to N-1)
+
+1. Multiply index of the character by M and add it to R
+
+1. Multiply M by N
+
+1. Go back to step 2 if there are more characters, else continue to step 7
+
+1. Add M to R
+
+1. Let S = 1 + (N-2) * (M-1) / (N-1)
+
+1. Subtract S from R
+
+1. Output R
+
+### Index to String
+
+1. Let L = 0, T = 1, I = index, N = amount of characters in character set
+1. Multiply T by N
+1. Add 1 to L
+1. Let C = T - (N-2)*(T-1)/(N-1) - 1
+1. If C > I, go to step 6, else if C = I, go to step 8, else go to step 2
+1. Divide T by N
+1. Subtract 1 from L 
+1. Let S = T - (N-2)*(T-1)/(N-1) - 1, if C = I, then let S = C
+1. Let X = I - S
+1. If L = 0, go to step 15, else go to step 11
+1. Divide X by N, let R = remainder
+1. Find the character corresponding to the remainder as an index in the character set
+1. Append the character to the end of the result string
+1. Subtract 1 from L
+1. Output the result string
 
 This is most probably everything for now. Feel free to use it if it can be remotely usable in your case, just credit me somewhere visible
 

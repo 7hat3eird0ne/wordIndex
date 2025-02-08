@@ -1,6 +1,9 @@
 #imports the json module
 import json
 
+class currentlyNotWorkingError(Exception):
+    pass
+
 def jsoncheck(fileName)-> bool:
     try:
         #open the file
@@ -16,7 +19,7 @@ def jsoncheck(fileName)-> bool:
             raise
         elif characterSet['minLen'] < 0:
             raise
-        elif abs(characterSet['caseSensitive']) > 1 :
+        elif type(characterSet['caseSensitive']) != bool:
             raise
 
         #check if insides of 'order' have type string and are exactly one character long    
@@ -85,6 +88,7 @@ def forward(string: str, fileName: str) -> int:
 
 
 def backward(num: int, fileName: str) -> str:
+    raise currentlyNotWorkingError
     #checks if json file is valid
     if not jsoncheck(fileName):
         print(f'Error: {fileName} is invalid')
@@ -113,7 +117,7 @@ def backward(num: int, fileName: str) -> str:
                 length += 1
 
             #generates the number represenation of the string
-            numRepres = num - int(len(characterSet['order'])**length - (len(characterSet['order'])-2)*(len(characterSet['order'])**length-1)/(len(characterSet['order'])-1) - 1 - excludeLenAddition)
+            numRepres = int(num - (len(characterSet['order'])**(length) - (len(characterSet['order'])-2)*(len(characterSet['order'])**(length)-1)/(len(characterSet['order'])-1) - 1 - excludeLenAddition))
 
             #converts the number represantion from decimal to its original base, and then converts to the number and appends it
             result = ''
