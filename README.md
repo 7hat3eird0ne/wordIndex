@@ -64,23 +64,14 @@ We can customise the calculator a bit, by copying the json file and changing the
 ### String to Index:
 
 1. Let R = 0, M = 1, N = amount of characters in character set
-
 1. Take the first character, or next unused one
-
 1. Find the characters index in the character set (starting with 0 going up to N-1)
-
 1. Multiply index of the character by M and add it to R
-
 1. Multiply M by N
-
-1. Go back to step 2 if there are more characters, else continue to step 7
-
+1. If there are more characters, go to step 2, else continue to step 7
 1. Add M to R
-
 1. Let S = 1 + (N-2)*(M-1)/(N-1)
-
 1. Subtract S from R
-
 1. Output R
 
 ### Index to String
