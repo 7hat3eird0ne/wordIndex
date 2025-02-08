@@ -77,7 +77,7 @@ We can customise the calculator a bit, by copying the json file and changing the
 
 1. Add M to R
 
-1. Let S = 1 + (N-2) * (M-1) / (N-1)
+1. Let S = 1 + (N-2)*(M-1)/(N-1)
 
 1. Subtract S from R
 
