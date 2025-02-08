@@ -17,6 +17,8 @@ The first few indexes of our character set would be:
 
 and so on...
 
+I would like to note that I made this just for fun + this is very messy and very unprofessional :D
+
 ## The math behind it
 
 The way the number is actualy computed and the math behind it is pretty simple:
@@ -92,6 +94,6 @@ We can customise the calculator a bit, by copying the json file and changing the
 1. If L = 0, go to step 15, else go to step 10
 1. Output the result string
 
-This is most probably everything for now. Feel free to use it if it can be remotely usable in your case, just credit me somewhere visible
+This is most probably everything for now. Feel free to use it if it can be remotely usable in your case
 
 Thank you for reading!
